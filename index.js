@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 
+const teamMembers = [];
+
 // TODO: add validation to the inquirer prompts
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
@@ -34,6 +36,14 @@ let selectEmployeeType = function() {
             createIntern();
         } else {
             console.log('DONE!!!');
+            console.log(teamMembers);
+            let html = render(teamMembers);
+            fs.writeFile(outputPath, html, function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+                console.log("Success!");
+            });
         }
     });
 };
@@ -62,6 +72,7 @@ let promptManager = function() {
         },
     ]).then(function(data) {
         console.log(data.role);
+        teamMembers.push(new Manager(data.name, data.id, data.email, data.officeNumber));
         selectEmployeeType();
     });
 }
@@ -89,7 +100,8 @@ let createEngineer = function() {
             name: "github",
             message: "What is your github?"
         },
-    ]).then(function() {
+    ]).then(function (data) {
+        teamMembers.push(new Engineer(data.name, data.id, data.email, data.github));
         selectEmployeeType();
     });
 }
@@ -117,7 +129,8 @@ let createIntern = function() {
             name: "school",
             message: "What is your school?"
         },
-    ]).then(function() {
+    ]).then(function (data) {
+        teamMembers.push(new Intern(data.name, data.id, data.email, data.school));
         selectEmployeeType();
     });
 }
