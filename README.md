@@ -8,6 +8,7 @@
 * [Usage](#usage)
 * [Contributions](#contributions)
 * [Tests](#tests)
+* [Code sources](#code-sources)
 * [License](#license)
 
 ## Description
