@@ -12,10 +12,7 @@ const render = require("./src/page-template.js");
 
 const teamMembers = [];
 
-// TODO: add validation to the inquirer prompts
-
-// TODO: Write Code to gather information about the development team members, and render the HTML file.
-
+// Block to select the type of employee
 let selectEmployeeType = function() {
     return inquirer.prompt([
         {
@@ -29,15 +26,13 @@ let selectEmployeeType = function() {
             ]
         }
     ]).then(function(data) {
-        console.log(data);
         if (data.role === "Engineer") {
             createEngineer();
         } else if (data.role === "Intern") {
             createIntern();
         } else {
-            console.log('DONE!!!');
-            console.log(teamMembers);
             let html = render(teamMembers);
+            // Write the HTML file
             fs.writeFile(outputPath, html, function(err) {
                 if (err) {
                     return console.log(err);
@@ -48,6 +43,7 @@ let selectEmployeeType = function() {
     });
 };
 
+// Block to add a manager
 let promptManager = function() {
     inquirer.prompt([
         {
@@ -71,14 +67,14 @@ let promptManager = function() {
             message: "What is your office number?"
         },
     ]).then(function(data) {
-        console.log(data.role);
         teamMembers.push(new Manager(data.name, data.id, data.email, data.officeNumber));
+        // Add an employee
         selectEmployeeType();
     });
 }
 
+// Block to create an engineer and push to teamMembers array
 let createEngineer = function() {
-    console.log('createEngineer!!!')
     inquirer.prompt([
         {
             type: "input",
@@ -101,13 +97,14 @@ let createEngineer = function() {
             message: "What is your github?"
         },
     ]).then(function (data) {
+        // Add the engineer to the teamMembers array
         teamMembers.push(new Engineer(data.name, data.id, data.email, data.github));
+        // Back to add an employee menu
         selectEmployeeType();
     });
 }
 
-let createIntern = function() {
-    console.log('CREATEINTERN!!!')
+let createIntern = function () {
     inquirer.prompt([
         {
             type: "input",
@@ -133,6 +130,6 @@ let createIntern = function() {
         teamMembers.push(new Intern(data.name, data.id, data.email, data.school));
         selectEmployeeType();
     });
-}
+};
 
 promptManager();
