@@ -52,19 +52,32 @@ let promptManager = function() {
             message: "What is your name?"
         },
         {
-            type: "input",
+            type: "number",
             name: "id",
-            message: "What is your id?"
+            message: "What is your id?",
+            validate: function(value) {
+                const valid = !isNaN(parseInt(value));
+                return valid || "Please enter a number";
+            }
         },
         {
             type: "input",
             name: "email",
-            message: "What is your email?"
+            message: "What is your email?",
+            validate: function (email) {
+                valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+
+                return valid || "Please enter a valid email";
+            }
         },
         {
-            type: "input",
+            type: "number",
             name: "officeNumber",
-            message: "What is your office number?"
+            message: "What is your office number?",
+            validate: function(value) {
+                const valid = !isNaN(parseInt(value));
+                return valid || "Please enter a number";
+            }
         },
     ]).then(function(data) {
         teamMembers.push(new Manager(data.name, data.id, data.email, data.officeNumber));
@@ -79,22 +92,31 @@ let createEngineer = function() {
         {
             type: "input",
             name: "name",
-            message: "What is your name?"
+            message: "What is their name?"
         },
         {
-            type: "input",
+            type: "number",
             name: "id",
-            message: "What is your id?"
+            message: "What is their id?",
+            validate: function(value) {
+                const valid = !isNaN(parseInt(value));
+                return valid || "Please enter a number";
+            }
         },
         {
             type: "input",
             name: "email",
-            message: "What is your email?"
+            message: "What is their email?",
+            validate: function (email) {
+                valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+
+                return valid || "Please enter a valid email";
+            }
         },
         {
             type: "input",
             name: "github",
-            message: "What is your github?"
+            message: "What is their github?"
         },
     ]).then(function (data) {
         // Add the engineer to the teamMembers array
@@ -109,25 +131,36 @@ let createIntern = function () {
         {
             type: "input",
             name: "name",
-            message: "What is your name?"
+            message: "What is their name?"
         },
         {
-            type: "input",
+            type: "number",
             name: "id",
-            message: "What is your id?"
+            message: "What is their id?",
+            validate: function(value) {
+                const valid = !isNaN(parseInt(value));
+                return valid || "Please enter a number";
+            }
         },
         {
             type: "input",
             name: "email",
-            message: "What is your email?"
+            message: "What is their email?",
+            validate: function (email) {
+                valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+
+                return valid || "Please enter a valid email";
+            }
         },
         {
             type: "input",
             name: "school",
-            message: "What is your school?"
+            message: "What is their school?"
         },
     ]).then(function (data) {
+        // Add the intern to the teamMembers array
         teamMembers.push(new Intern(data.name, data.id, data.email, data.school));
+        // Back to add an employee menu
         selectEmployeeType();
     });
 };
